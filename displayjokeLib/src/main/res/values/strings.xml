@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">displayJokeLib</string>
+    <string name="joke_key">joke</string>
+</resources>
