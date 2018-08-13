@@ -44,10 +44,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Intent intent = new Intent(this, JokeActivity.class);
-        intent.putExtra(getString(com.udacity.gradle.builditbigger.R.string.joke_key), Jokes.giveMeJoke() );
+        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
+        endpointsAsyncTask.execute(this);
 
-        startActivity(intent);
+
+//        Intent intent = new Intent(this, JokeActivity.class);
+//        intent.putExtra(getString(com.udacity.gradle.builditbigger.R.string.joke_key), Jokes.giveMeJoke() );
+//
+//        startActivity(intent);
+
 
         //Toast.makeText(this, Jokes.giveMeJoke(), Toast.LENGTH_SHORT).show();
     }
