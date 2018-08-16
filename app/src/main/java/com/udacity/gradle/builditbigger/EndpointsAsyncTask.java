@@ -42,7 +42,6 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
         context = params[0];
 
         try {
-            //return myApiService.sayHi("anybody").execute().getData();
             return myApiService.getJoke().execute().getData();
         } catch (IOException e) {
             return e.getMessage();
@@ -55,10 +54,5 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
         intent.putExtra(context.getString(com.udacity.gradle.builditbigger.R.string.joke_key), Jokes.giveMeJoke() );
 
         context.startActivity(intent);
-//
-//        startActivity(intent);
-
-
-        //Toast.makeText(context, result, Toast.LENGTH_LONG).show();
     }
 }

@@ -20,19 +20,7 @@ public class EndpointsAsyncTaskBasicTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(
             MainActivity.class);
-            //MainActivity.class, false, false);
 
-//    Incorrect!
-//    @Test
-//    public void checkTaskResult() throws Exception {
-//        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
-//        onView(withId(R.id.tell_joke_button) ).perform(click() );
-//        //endpointsAsyncTask.execute(activityTestRule.getActivity() );
-//        String joke = endpointsAsyncTask.get();
-//        Assert.assertTrue(!joke.isEmpty() );
-//    }
-
-//    It works!
     @Test
     public void checkTaskResult() throws Exception {
         EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
@@ -40,11 +28,4 @@ public class EndpointsAsyncTaskBasicTest {
         String joke = endpointsAsyncTask.get();
         Assert.assertTrue(!joke.isEmpty() );
     }
-
-
-//    @Test
-//    public void checkResultDisplayed() {
-//        onView(withId(R.id.tell_joke_button) ).perform(click() );
-//        onView(withId(R.id.tv_joke) ).check(matches(isDisplayed() ) );
-//    }
 }
