@@ -2,30 +2,47 @@ package com.udacity.gradle.builditbigger;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-
+import java.util.concurrent.CountDownLatch;
 
 @RunWith(AndroidJUnit4.class)
 public class EndpointsAsyncTaskBasicTest {
+    private static final String TAG = "EndpointsAsyncTaskBasicTest";
+
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(
             MainActivity.class);
 
     @Test
-    public void checkTaskResult() throws Exception {
-        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
-        endpointsAsyncTask.execute(activityTestRule.getActivity() );
-        String joke = endpointsAsyncTask.get();
-        Assert.assertTrue(!joke.isEmpty() );
+    public void checkTaskResult() {
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+        try {
+            EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
+            endpointsAsyncTask.setTaskListener(new EndpointsAsyncTask.TaskListener() {
+                @Override
+                public void onResult(String joke) {
+                    Assert.assertTrue(joke.length() > 0);
+                    countDownLatch.countDown();
+                }
+
+                @Override
+                public void onError(String errorMessage) {
+                    Assert.assertFalse(errorMessage.length() > 0);
+                    countDownLatch.countDown();
+                }
+            });
+
+            endpointsAsyncTask.execute(activityTestRule.getActivity());
+            countDownLatch.await();
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage() );
+        }
     }
 }
